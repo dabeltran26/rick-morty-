@@ -43,29 +43,30 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             if (state is DataState) {
               myCharacters = myCharacters ?? state.myCharacters;
-              return Stack(children: [
+              return myCharacters!.isEmpty
+                  ? Container(
+                padding: const EdgeInsets.all(10.0),
+                alignment: Alignment.center,
+                child: Text(
+                  "No hay coincidencias.",
+                  style: TextStyle(color: MyTheme.generalColors.black),
+                  textAlign: TextAlign.center,
+                ),
+              )
+                  : Stack(children: [
                 Column(
                   children: [
                     Expanded(
                       child: ListView.builder(
                           itemCount: myCharacters!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return CharacterCard(character: myCharacters![index],);
+                            return CharacterCard(
+                              character: myCharacters![index],
+                            );
                           }),
                     )
                   ],
                 ),
-                myCharacters!.isEmpty
-                    ? Container(
-                        padding: const EdgeInsets.all(10.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "No hay coincidencias.",
-                          style: TextStyle(color: MyTheme.generalColors.black),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    : const SizedBox(),
               ]);
             }
 
